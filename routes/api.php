@@ -31,7 +31,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
 });
 
 Route::post('/account/update/', [AccountController::class, 'update'])->middleware('jwt.verify');
-Route::post('/account/password/change/', [AccountController::class, 'pasword_change'])->middleware('jwt.verify');
+Route::put('/account/change_password', [AccountController::class, 'password_change'])->middleware('jwt.verify');
 
 
 

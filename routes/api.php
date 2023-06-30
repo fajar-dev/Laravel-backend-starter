@@ -2,13 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PMIController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\BdrsController;
-use App\Http\Controllers\NewsController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\AccountController;
-use App\Http\Controllers\RequestsController;
-use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +25,10 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
   Route::post('refresh', [AuthController::class, 'refresh']);
   Route::get('me', [AuthController::class, 'me']);
 });
+
+Route::get('/user', [UserController::class, 'read'])->middleware('jwt.verify');
+Route::get('/user/delete/{id}', [UserController::class, 'delete'])->middleware('jwt.verify');
+
 
 Route::post('/account/update/', [AccountController::class, 'update'])->middleware('jwt.verify');
 Route::put('/account/change_password', [AccountController::class, 'password_change'])->middleware('jwt.verify');

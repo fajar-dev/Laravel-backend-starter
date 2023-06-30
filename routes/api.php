@@ -30,8 +30,8 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
   Route::get('me', [AuthController::class, 'me']);
 });
 
-Route::put('/account/update/{id}', [AccountController::class, 'update'])->middleware('jwt.verify');
-Route::post('/account/photo/{id}', [AccountController::class, 'photo'])->middleware('jwt.verify');
+Route::post('/account/update/', [AccountController::class, 'update'])->middleware('jwt.verify');
+Route::post('/account/password/change/', [AccountController::class, 'pasword_change'])->middleware('jwt.verify');
 
 
 

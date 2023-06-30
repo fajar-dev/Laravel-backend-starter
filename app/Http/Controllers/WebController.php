@@ -12,7 +12,6 @@ class WebController extends Controller
 {
     public function resetForm($token) { 
         $cekToken = DB::table('password_resets')->where('token', '=', $token)->first();
-        // dd($cekToken);
         if($cekToken){
             return view('web.reset', ['token' => $token]);
         }

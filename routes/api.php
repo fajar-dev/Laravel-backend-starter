@@ -28,6 +28,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
 
 Route::get('/user', [UserController::class, 'read'])->middleware('jwt.verify');
 Route::post('/user/create', [UserController::class, 'create'])->middleware('jwt.verify');
+Route::post('/user/update/{id}', [UserController::class, 'update'])->middleware('jwt.verify');
 Route::get('/user/delete/{id}', [UserController::class, 'delete'])->middleware('jwt.verify');
 
 

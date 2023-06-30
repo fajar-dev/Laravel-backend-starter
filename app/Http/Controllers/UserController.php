@@ -63,7 +63,8 @@ class UserController extends Controller
         }
     }
 
-    public function read(){
+    public function read()
+    {
         try {
             $respons = User::all();
             return response()->json([
@@ -80,6 +81,62 @@ class UserController extends Controller
                 'message' => $e->getMessage(),
                 'data' => []
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function update($id, Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|email',
+            'photo' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'response' => Response::HTTP_UNPROCESSABLE_ENTITY,
+                'success' => false,
+                'message' => $validator->errors(),
+                'data' => []
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }else{
+            try {
+                if(empty($request->photo)){
+                    $user = User::findOrFail($id);
+                    $user->name  = $request->name;
+                    $user->email  = $request->email;
+                    $respons = $user->save();
+                    return response()->json([
+                        'response' => Response::HTTP_OK,
+                        'success' => true,
+                        'message' => 'update user without photo by id ' . $id,
+                        'data' => $respons
+                    ], Response::HTTP_OK);
+                }else{
+                    $imagePath = $request->file('photo')->getRealPath();
+                    $result = Cloudinary::upload($imagePath,  ['folder' => 'user']);
+                    $imageUrl = $result->getSecurePath();
+                    $user =  User::findOrFail($id);;
+                    $user->name  = $request->name;
+                    $user->email  = $request->email;
+                    $user->photo  = $imageUrl;
+                    $respons = $user->save();
+                    return response()->json([
+                        'response' => Response::HTTP_OK,
+                        'success' => true,
+                        'message' => 'update user with photo by id ' . $id,
+                        'data' => $respons
+                    ], Response::HTTP_OK);
+                }
+                
+            } catch (QueryException $e) {
+                return response()->json([
+                    'response' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                    'success' => false,
+                    'message' => $e->getMessage(),
+                    'data' => []
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
         }
     }
 

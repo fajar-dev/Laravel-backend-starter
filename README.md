@@ -1,7 +1,9 @@
 # Laravel Backend Starter
 
 > Backend laravel with json web token and Cloudinary
+
 give a star if you like it
+
 Author : fajar-dev
 
 ## Requirements

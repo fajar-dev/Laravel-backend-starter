@@ -2,12 +2,10 @@
 
 > Backend laravel with json web token and Cloudinary
 
-<<<<<<< HEAD
-
 ## Authors
 
 - [@fajar-dev](https://www.github.com/fajar-dev)
-
+Give a star if you like this
 
 ## Tech Stack
 
@@ -261,9 +259,9 @@ Example suceess Responds:
 }
 ```
 
-#### 1. Update Account
+#### 2. Password Change
 
-> POST `http://localhost:8000/api/user/update/{id}`
+> POST `http://localhost:8000/api/user/change_password`
 ```
 password: required|string|min:6|confirmed
 password_confirmation: required|string|min:6

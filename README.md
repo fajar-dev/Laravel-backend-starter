@@ -2,6 +2,7 @@
 
 > Backend laravel with json web token and Cloudinary
 
+<<<<<<< HEAD
 
 ## Authors
 
@@ -13,7 +14,6 @@
 **Package:** JWT, cloudinary,
 
 **Server:** Laravel 8
-
 
 ## Requirements
 

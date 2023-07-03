@@ -32,7 +32,7 @@ Route::post('/user/update/{id}', [UserController::class, 'update'])->middleware(
 Route::get('/user/delete/{id}', [UserController::class, 'delete'])->middleware('jwt.verify');
 
 
-Route::post('/account/update/', [AccountController::class, 'update'])->middleware('jwt.verify');
+Route::post('/account/update', [AccountController::class, 'update'])->middleware('jwt.verify');
 Route::put('/account/change_password', [AccountController::class, 'password_change'])->middleware('jwt.verify');
 
 

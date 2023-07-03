@@ -51,13 +51,13 @@ class AccountController extends Controller
                     $user->name  = $request->name;
                     $user->email  = $request->email;
                     $user->photo  = $imageUrl;
-                    $respons = $user->save();
+                    $user->save();
             
                     return response()->json([
                         'response' => Response::HTTP_OK,
                         'success' => true,
-                        'message' => 'User account update with photo successfully.',
-                        'data' => $respons
+                        'message' => 'User account update with photo successfully',
+                        'data' => []
                     ], Response::HTTP_OK);
                 }
                 
@@ -90,12 +90,12 @@ class AccountController extends Controller
             try {
                     $user = User::findOrFail(Auth::user()->id);
                     $user->password  = Hash::make($request->password);
-                    $respons = $user->save();
+                    $user->save();
                     return response()->json([
                         'response' => Response::HTTP_OK,
                         'success' => true,
-                        'message' => 'Change password successfully.',
-                        'data' => $respons
+                        'message' => 'Change password successfully',
+                        'data' => []
                     ], Response::HTTP_OK);
             
                 

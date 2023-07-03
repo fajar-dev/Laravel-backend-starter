@@ -49,7 +49,7 @@ class UserController extends Controller
                     'response' => Response::HTTP_OK,
                     'success' => true,
                     'message' => 'Create user',
-                    'data' => $respons
+                    'data' => []
                 ], Response::HTTP_OK);
                 
             } catch (QueryException $e) {
@@ -110,7 +110,7 @@ class UserController extends Controller
                         'response' => Response::HTTP_OK,
                         'success' => true,
                         'message' => 'update user without photo by id ' . $id,
-                        'data' => $respons
+                        'data' => []
                     ], Response::HTTP_OK);
                 }else{
                     $imagePath = $request->file('photo')->getRealPath();
@@ -125,7 +125,7 @@ class UserController extends Controller
                         'response' => Response::HTTP_OK,
                         'success' => true,
                         'message' => 'update user with photo by id ' . $id,
-                        'data' => $respons
+                        'data' => []
                     ], Response::HTTP_OK);
                 }
                 

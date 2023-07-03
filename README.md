@@ -2,6 +2,19 @@
 
 > Backend laravel with json web token and Cloudinary
 
+
+## Authors
+
+- [@fajar-dev](https://www.github.com/fajar-dev)
+
+
+## Tech Stack
+
+**Package:** JWT, cloudinary,
+
+**Server:** Laravel 8
+
+
 ## Requirements
 
 - git
@@ -47,8 +60,8 @@ example `Authorization : BaarereyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2
 > POST `http://localhost:8000/api/auth/register`
 ```
 name: required
-email: required
-password: required|email|unique
+email: required|email|unique
+password: required
 ```
 
 Example suceess Responds:
@@ -176,5 +189,91 @@ Example suceess Responds:
             "Updated_at": "2023-06-30T18:51:04.000000Z"
         }
     ]
+}
+```
+
+#### 2. Create
+
+> POST `http://localhost:8000/api/user/create`
+```
+name: required
+email: required|email|unique:users
+password: required
+photo: required|image|mimes:jpeg,png,jpg,gif|max:2048
+```
+Example suceess Responds:
+```JSON
+{
+    "response": 200,
+    "success": true,
+    "message": "Create user",
+    "data": []
+}
+```
+
+#### 3. Update
+
+> POST `http://localhost:8000/api/user/update/{id}`
+```
+name: required
+email: required|email
+photo: image|mimes:jpeg,png,jpg,gif|max:2048
+```
+Example suceess Responds:
+```JSON
+{
+    "response": 200,
+    "success": true,
+    "message": "update user with photo by id {id}",
+    "data": []
+}
+```
+
+#### 4. Delete
+
+> GET `http://localhost:8000/api/user/delete/{id}`
+Example suceess Responds:
+```JSON
+{
+    "response": 200,
+    "success": true,
+    "message": "Delete user by id {id}",
+    "data": []
+}
+```
+### Account
+
+#### 1. Update Account
+
+> POST `http://localhost:8000/api/account/update`
+```
+name: required
+email: required|email
+photo: image|mimes:jpeg,png,jpg,gif|max:2048
+```
+Example suceess Responds:
+```JSON
+{
+    "response": 200,
+    "success": true,
+    "message": "User account update with photo successfully",
+    "data": []
+}
+```
+
+#### 1. Update Account
+
+> POST `http://localhost:8000/api/user/update/{id}`
+```
+password: required|string|min:6|confirmed
+password_confirmation: required|string|min:6
+```
+Example suceess Responds:
+```JSON
+{
+    "response": 200,
+    "success": true,
+    "message": "Change password successfully",
+    "data": []
 }
 ```

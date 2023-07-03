@@ -4,8 +4,9 @@
 
 ## Authors
 
-- [@fajar-dev](https://www.github.com/fajar-dev)
-Give a star if you like this
+- Follow Me [@fajar-dev](https://www.github.com/fajar-dev)
+  
+Give a star if you like this repository
 
 ## Tech Stack
 

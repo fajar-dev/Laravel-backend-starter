@@ -42,9 +42,9 @@ Give a star if you like this
 - GET <http://localhost:8000/api/user> (need authorization)
 - POST <http://localhost:8000/api/user/create> (need authorization)
 - POST <http://localhost:8000/api/user/update/{id}> (need authorization)
-- POST <http://localhost:8000/api/user/delete/{id}> (need authorization)
+- GET <http://localhost:8000/api/user/delete/{id}> (need authorization)
 - POST <http://localhost:8000/api/account/update> (need authorization)
-- POST <http://localhost:8000/api/account/change_password> (need authorization)
+- PUT <http://localhost:8000/api/account/change_password> (need authorization)
 
 ## Authorization
 set Headers `Authorization : Baarer<YOUR_TOKEN>`
@@ -261,7 +261,7 @@ Example suceess Responds:
 
 #### 2. Password Change
 
-> POST `http://localhost:8000/api/user/change_password`
+> PUT `http://localhost:8000/api/user/change_password`
 ```
 password: required|string|min:6|confirmed
 password_confirmation: required|string|min:6

@@ -160,4 +160,28 @@ class UserController extends Controller
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    public function search(Request $request){
+        try {
+            $keyword = $request->input('keyword');
+            $respons = User::where('name', 'like', "%$keyword%")->get();
+            return response()->json([
+                'response' => Response::HTTP_OK,
+                'success' => true,
+                'message' => 'Read user like '.$keyword,
+                'data' => UserResource::collection($respons)
+            ], Response::HTTP_OK
+        );
+            
+        } catch (QueryException $e) {
+            return response()->json([
+
+                'response' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                'success' => false,
+                'message' => $e->getMessage(),
+                'data' => []
+
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 }

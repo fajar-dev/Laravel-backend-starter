@@ -149,8 +149,8 @@ Example suceess Responds:
 ```JSON
 {
     "id": 3,
-    "name": "fajar Rivaldi Chan",
-    "email": "fajarrivaldi2015@gmail.com",
+    "name": "test",
+    "email": "test@gmail.com",
     "email_verified_at": null,
     "photo": "avatar.png",
     "created_at": "2023-06-30T18:50:12.000000Z",
@@ -173,19 +173,27 @@ Example suceess Responds:
     "data": [
         {
             "id": 1,
-            "Name": "fajar Rivaldi Chan",
-            "Email": "fajar@gmail.com",
+            "Name": "test1",
+            "Email": "test1@gmail.com",
             "Photo": "avatar.png",
             "Created_at": "2023-06-30T15:02:08.000000Z",
             "Updated_at": "2023-06-30T15:02:08.000000Z"
         },
         {
             "id": 2,
-            "Name": "Sukma Rizky",
-            "Email": "sukma@gmail.com",
+            "Name": "test2",
+            "Email": "test2@gmail.com",
             "Photo": "avatar.png",
             "Created_at": "2023-06-30T18:50:12.000000Z",
             "Updated_at": "2023-06-30T18:51:04.000000Z"
+        }
+        {
+            "id": 3,
+            "Name": "test3",
+            "Email": "test3@gmail.com",
+            "Photo": "avatar.png",
+            "Created_at": "2023-07-30T18:50:12.000000Z",
+            "Updated_at": "2023-07-30T18:51:04.000000Z"
         }
     ]
 }
@@ -240,6 +248,37 @@ Example suceess Responds:
     "data": []
 }
 ```
+
+#### 4. Search
+
+> GET `http://localhost:8000/api/user/search?keyword={keyword}`
+Example suceess Responds:
+```JSON
+{
+    "response": 200,
+    "success": true,
+    "message": "Read user like {keyword}",
+    "data": [
+        {
+            "id": 1,
+            "Name": "test1",
+            "Email": "fajar@gmail.com",
+            "Photo": "avatar.png",
+            "Created_at": "2023-06-30T15:02:08.000000Z",
+            "Updated_at": "2023-06-30T15:02:08.000000Z"
+        },
+        {
+            "id": 3,
+            "Name": "test2",
+            "Email": "test25@gmail.com",
+            "Photo": "avatar.png",
+            "Created_at": "2023-06-30T18:50:12.000000Z",
+            "Updated_at": "2023-06-30T18:51:04.000000Z"
+        },
+    ]
+}
+```
+
 ### Account
 
 #### 1. Update Account

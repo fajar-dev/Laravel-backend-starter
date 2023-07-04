@@ -116,6 +116,7 @@ Example suceess Responds:
 #### 4. Logout
 
 > POST `http://localhost:8000/api/auth/logout`
+
 Example suceess Responds:
 ```JSON
 {
@@ -129,6 +130,7 @@ Example suceess Responds:
 #### 5. Token Refresh
 
 > POST `http://localhost:8000/api/auth/refresh`
+
 Example suceess Responds:
 ```JSON
 {
@@ -146,6 +148,7 @@ Example suceess Responds:
 #### 6. Me
 
 > GET `http://localhost:8000/api/auth/me`
+
 Example suceess Responds:
 ```JSON
 {
@@ -240,6 +243,7 @@ Example suceess Responds:
 #### 4. Delete
 
 > GET `http://localhost:8000/api/user/delete/{id}`
+
 Example suceess Responds:
 ```JSON
 {
@@ -253,6 +257,7 @@ Example suceess Responds:
 #### 4. Search
 
 > GET `http://localhost:8000/api/user/search?keyword={keyword}`
+
 Example suceess Responds:
 ```JSON
 {

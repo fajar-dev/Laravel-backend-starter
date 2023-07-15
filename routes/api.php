@@ -26,15 +26,17 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
   Route::get('me', [AuthController::class, 'me']);
 });
 
-Route::get('/user', [UserController::class, 'read'])->middleware('jwt.verify');
-Route::post('/user/create', [UserController::class, 'create'])->middleware('jwt.verify');
-Route::post('/user/update/{id}', [UserController::class, 'update'])->middleware('jwt.verify');
-Route::get('/user/delete/{id}', [UserController::class, 'delete'])->middleware('jwt.verify');
-Route::get('/user/search', [UserController::class, 'search'])->middleware('jwt.verify');
+Route::middleware(['jwt.verify'])->group(function () {
+  Route::get('/user', [UserController::class, 'read']);
+  Route::post('/user/create', [UserController::class, 'create']);
+  Route::post('/user/update/{id}', [UserController::class, 'update']);
+  Route::get('/user/delete/{id}', [UserController::class, 'delete']);
+  Route::get('/user/search', [UserController::class, 'search']);
 
+  Route::post('/account/update', [AccountController::class, 'update']);
+  Route::put('/account/change_password', [AccountController::class, 'password_change']);
+});
 
-Route::post('/account/update', [AccountController::class, 'update'])->middleware('jwt.verify');
-Route::put('/account/change_password', [AccountController::class, 'password_change'])->middleware('jwt.verify');
 
 
 

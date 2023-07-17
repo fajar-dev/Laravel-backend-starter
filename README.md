@@ -46,6 +46,7 @@ Give a star if you like this repository
 - POST <http://localhost:8000/api/user/update/{id}> (need authorization)
 - GET <http://localhost:8000/api/user/delete/{id}> (need authorization)
 - GET <http://localhost:8000/api/user/user/search?keyword={keyword}> (need authorization)
+- GET <http://localhost:8000/api/user/paginate?per_page=10&page=1> (need authorization)
 - POST <http://localhost:8000/api/account/update> (need authorization)
 - PUT <http://localhost:8000/api/account/change_password> (need authorization)
 

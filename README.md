@@ -255,7 +255,7 @@ Example suceess Responds:
 }
 ```
 
-#### 4. Search
+#### 5. Search
 
 > GET `http://localhost:8000/api/user/search?keyword={keyword}`
 
@@ -265,6 +265,37 @@ Example suceess Responds:
     "response": 200,
     "success": true,
     "message": "Read user like {keyword}",
+    "data": [
+        {
+            "id": 1,
+            "Name": "test1",
+            "Email": "fajar@gmail.com",
+            "Photo": "avatar.png",
+            "Created_at": "2023-06-30T15:02:08.000000Z",
+            "Updated_at": "2023-06-30T15:02:08.000000Z"
+        },
+        {
+            "id": 3,
+            "Name": "test2",
+            "Email": "test25@gmail.com",
+            "Photo": "avatar.png",
+            "Created_at": "2023-06-30T18:50:12.000000Z",
+            "Updated_at": "2023-06-30T18:51:04.000000Z"
+        },
+    ]
+}
+```
+
+#### 6. Pagination
+
+> GET `http://localhost:8000/api/user/paginate?per_page=10&page=1`
+
+Example suceess Responds:
+```JSON
+{
+    "response": 200,
+    "success": true,
+    "message": "Read user with pagination page 2",
     "data": [
         {
             "id": 1,

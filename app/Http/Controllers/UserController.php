@@ -193,7 +193,7 @@ class UserController extends Controller
             return response()->json([
                 'response' => Response::HTTP_OK,
                 'success' => true,
-                'message' => 'Read user with pagination',
+                'message' => 'Read user with pagination page ' . $request->page,
                 'data' => UserResource::collection($respons)
             ], Response::HTTP_OK);
             

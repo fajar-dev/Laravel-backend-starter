@@ -12,11 +12,12 @@ Give a star if you like this repository
 
 **Package:** JWT, cloudinary,
 
-**Server:** Laravel 8
+**Server:** Laravel 10
 
 ## Requirements
 
 - git
+- PHP 8
 - laravel
 - A browser (e.g., Firefox or Chrome)
 - composser
@@ -45,6 +46,7 @@ Give a star if you like this repository
 - POST <http://localhost:8000/api/user/update/{id}> (need authorization)
 - GET <http://localhost:8000/api/user/delete/{id}> (need authorization)
 - GET <http://localhost:8000/api/user/user/search?keyword={keyword}> (need authorization)
+- GET <http://localhost:8000/api/user/paginate?per_page=10&page=1> (need authorization)
 - POST <http://localhost:8000/api/account/update> (need authorization)
 - PUT <http://localhost:8000/api/account/change_password> (need authorization)
 
@@ -254,7 +256,7 @@ Example suceess Responds:
 }
 ```
 
-#### 4. Search
+#### 5. Search
 
 > GET `http://localhost:8000/api/user/search?keyword={keyword}`
 
@@ -264,6 +266,37 @@ Example suceess Responds:
     "response": 200,
     "success": true,
     "message": "Read user like {keyword}",
+    "data": [
+        {
+            "id": 1,
+            "Name": "test1",
+            "Email": "fajar@gmail.com",
+            "Photo": "avatar.png",
+            "Created_at": "2023-06-30T15:02:08.000000Z",
+            "Updated_at": "2023-06-30T15:02:08.000000Z"
+        },
+        {
+            "id": 3,
+            "Name": "test2",
+            "Email": "test25@gmail.com",
+            "Photo": "avatar.png",
+            "Created_at": "2023-06-30T18:50:12.000000Z",
+            "Updated_at": "2023-06-30T18:51:04.000000Z"
+        },
+    ]
+}
+```
+
+#### 6. Pagination
+
+> GET `http://localhost:8000/api/user/paginate?per_page=10&page=1`
+
+Example suceess Responds:
+```JSON
+{
+    "response": 200,
+    "success": true,
+    "message": "Read user with pagination page 2",
     "data": [
         {
             "id": 1,

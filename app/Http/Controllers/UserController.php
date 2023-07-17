@@ -184,4 +184,26 @@ class UserController extends Controller
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    public function paginate(Request $request)
+    {
+        try {
+            $perPage = $request->input('per_page', 10);
+            $respons = User::paginate($perPage);
+            return response()->json([
+                'response' => Response::HTTP_OK,
+                'success' => true,
+                'message' => 'Read user with pagination page ' . $request->page,
+                'data' => UserResource::collection($respons)
+            ], Response::HTTP_OK);
+            
+        } catch (QueryException $e) {
+            return response()->json([
+                'response' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                'success' => false,
+                'message' => $e->getMessage(),
+                'data' => []
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 }

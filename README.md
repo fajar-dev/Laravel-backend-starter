@@ -12,11 +12,12 @@ Give a star if you like this repository
 
 **Package:** JWT, cloudinary,
 
-**Server:** Laravel 8
+**Server:** Laravel 10
 
 ## Requirements
 
 - git
+- PHP 8
 - laravel
 - A browser (e.g., Firefox or Chrome)
 - composser

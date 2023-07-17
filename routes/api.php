@@ -32,6 +32,7 @@ Route::middleware(['jwt.verify'])->group(function () {
   Route::post('/user/update/{id}', [UserController::class, 'update']);
   Route::get('/user/delete/{id}', [UserController::class, 'delete']);
   Route::get('/user/search', [UserController::class, 'search']);
+  Route::get('/user/paginate', [UserController::class, 'paginate']);
 
   Route::post('/account/update', [AccountController::class, 'update']);
   Route::put('/account/change_password', [AccountController::class, 'password_change']);

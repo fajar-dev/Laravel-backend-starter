@@ -44,13 +44,13 @@ class UserController extends Controller
                 $user->password  = Hash::make($request->password);
                 $user->remember_token  = Str::random(60);
                 $user->photo  = $imageUrl;
-                $respons = $user->save();
+                $user->save();
                 return response()->json([
-                    'response' => Response::HTTP_OK,
+                    'response' => Response::HTTP_CREATED,
                     'success' => true,
                     'message' => 'Create user',
                     'data' => []
-                ], Response::HTTP_OK);
+                ], Response::HTTP_CREATED);
                 
             } catch (QueryException $e) {
                 return response()->json([
@@ -88,7 +88,7 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users,email,' . $id,
             'photo' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
@@ -101,33 +101,22 @@ class UserController extends Controller
             ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }else{
             try {
-                if(empty($request->photo)){
-                    $user = User::findOrFail($id);
-                    $user->name  = $request->name;
-                    $user->email  = $request->email;
-                    $respons = $user->save();
-                    return response()->json([
-                        'response' => Response::HTTP_OK,
-                        'success' => true,
-                        'message' => 'update user without photo by id ' . $id,
-                        'data' => []
-                    ], Response::HTTP_OK);
-                }else{
+                $user =  User::findOrFail($id);;
+                $user->name  = $request->name;
+                $user->email  = $request->email;
+                if($request->hasFile('photo')){
                     $imagePath = $request->file('photo')->getRealPath();
                     $result = Cloudinary::upload($imagePath,  ['folder' => 'user']);
                     $imageUrl = $result->getSecurePath();
-                    $user =  User::findOrFail($id);;
-                    $user->name  = $request->name;
-                    $user->email  = $request->email;
                     $user->photo  = $imageUrl;
-                    $respons = $user->save();
-                    return response()->json([
-                        'response' => Response::HTTP_OK,
-                        'success' => true,
-                        'message' => 'update user with photo by id ' . $id,
-                        'data' => []
-                    ], Response::HTTP_OK);
                 }
+                $user->save();
+                return response()->json([
+                    'response' => Response::HTTP_OK,
+                    'success' => true,
+                    'message' => 'update user by id ' . $id,
+                    'data' => []
+                ], Response::HTTP_OK);
                 
             } catch (QueryException $e) {
                 return response()->json([

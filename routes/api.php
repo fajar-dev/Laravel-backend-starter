@@ -27,10 +27,10 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
 });
 
 Route::middleware(['jwt.verify'])->group(function () {
-  Route::get('/user', [UserController::class, 'read']);
-  Route::post('/user/create', [UserController::class, 'create']);
-  Route::post('/user/update/{id}', [UserController::class, 'update']);
-  Route::get('/user/delete/{id}', [UserController::class, 'delete']);
+  Route::get('/users', [UserController::class, 'read']);
+  Route::post('/users', [UserController::class, 'create']);
+  Route::post('/users/{id}', [UserController::class, 'update']);
+  Route::delete('/users/{id}', [UserController::class, 'delete']);
   Route::get('/user/search', [UserController::class, 'search']);
   Route::get('/user/paginate', [UserController::class, 'paginate']);
 

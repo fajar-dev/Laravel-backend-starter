@@ -62,22 +62,40 @@ class AuthController extends Controller
         }
     }
 
-    public function login()
+    public function login(Request $request)
     {
-        $credentials = request(['email', 'password']);
-        if (! $token = auth()->attempt($credentials)) {
-            return response()->json([
-                'response' => Response::HTTP_UNAUTHORIZED,
-                'success' => false,
-                'message' => 'Unauthorized',
-                'data' => [],
-            ], Response::HTTP_UNAUTHORIZED);
-        }
+        $validator = Validator::make($request->all(), [
+            'email' => 'required',
+            'password' => 'required',
+        ]);
 
-        return $this->respondWithToken($token);
+        if ($validator->fails()) {
+            return response()->json([
+                'response' => Response::HTTP_BAD_REQUEST,
+                'success' => false,
+                'errors' => $validator->errors(),
+            ], Response::HTTP_BAD_REQUEST);
+        }else{
+            try {
+                if (! $token = auth()->attempt($request->all())) {
+                    return response()->json([
+                        'response' => Response::HTTP_UNAUTHORIZED,
+                        'success' => false,
+                        'errors' => 'Username or password wrong',
+                    ], Response::HTTP_UNAUTHORIZED);
+                }
+                return $this->respondWithToken($token);
+            } catch (QueryException $e) {
+                return response()->json([
+                    'response' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                    'success' => false,
+                    'errors' => $e->getMessage(),
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        }        
     }
 
-    public function forget(Request $request ){
+    public function forget(Request $request){
         $cek = User::where('email', $request->email)->first();
         if($cek == null){
             return response()->json([

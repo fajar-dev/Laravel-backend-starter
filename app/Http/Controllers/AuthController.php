@@ -32,11 +32,10 @@ class AuthController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'response' => Response::HTTP_UNPROCESSABLE_ENTITY,
+                'response' => Response::HTTP_BAD_REQUEST,
                 'success' => false,
-                'message' => $validator->errors(),
-                'data' => []
-            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+                'errors' => $validator->errors(),
+            ], Response::HTTP_BAD_REQUEST);
 
         }else{
             try {
@@ -45,20 +44,19 @@ class AuthController extends Controller
                 $user->email  = $request->email;
                 $user->password  = Hash::make($request->password);
                 $user->remember_token  = Str::random(60);
-                $respons = $user->save();
+                $user->save();
                 return response()->json([
-                    'response' => Response::HTTP_OK,
+                    'response' => Response::HTTP_CREATED,
                     'success' => true,
                     'message' => 'Register successfully.',
-                    'data' => $respons
-                ], Response::HTTP_OK);
+                    'data' => $request->all()
+                ], Response::HTTP_CREATED);
                 
             } catch (QueryException $e) {
                 return response()->json([
                     'response' => Response::HTTP_INTERNAL_SERVER_ERROR,
                     'success' => false,
-                    'message' => $e->getMessage(),
-                    'data' => []
+                    'errors' => $e->getMessage(),
                 ], Response::HTTP_INTERNAL_SERVER_ERROR);
             }
         }

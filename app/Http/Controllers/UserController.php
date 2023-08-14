@@ -28,11 +28,10 @@ class UserController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'response' => Response::HTTP_UNPROCESSABLE_ENTITY,
+                'response' => Response::HTTP_BAD_REQUEST,
                 'success' => false,
                 'message' => $validator->errors(),
-                'data' => []
-            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+            ], Response::HTTP_BAD_REQUEST);
         }else{
             try {
                 $imagePath = $request->file('photo')->getRealPath();
@@ -49,7 +48,7 @@ class UserController extends Controller
                     'response' => Response::HTTP_CREATED,
                     'success' => true,
                     'message' => 'Create user',
-                    'data' => []
+                    'data' => $request->all()
                 ], Response::HTTP_CREATED);
                 
             } catch (QueryException $e) {
@@ -57,7 +56,6 @@ class UserController extends Controller
                     'response' => Response::HTTP_INTERNAL_SERVER_ERROR,
                     'success' => false,
                     'message' => $e->getMessage(),
-                    'data' => []
                 ], Response::HTTP_INTERNAL_SERVER_ERROR);
             }
         }
@@ -79,7 +77,6 @@ class UserController extends Controller
                 'response' => Response::HTTP_INTERNAL_SERVER_ERROR,
                 'success' => false,
                 'message' => $e->getMessage(),
-                'data' => []
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
@@ -94,11 +91,10 @@ class UserController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'response' => Response::HTTP_UNPROCESSABLE_ENTITY,
+                'response' => Response::HTTP_BAD_REQUEST,
                 'success' => false,
                 'message' => $validator->errors(),
-                'data' => []
-            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+            ], Response::HTTP_BAD_REQUEST);
         }else{
             try {
                 $user =  User::findOrFail($id);;
@@ -115,7 +111,7 @@ class UserController extends Controller
                     'response' => Response::HTTP_OK,
                     'success' => true,
                     'message' => 'update user by id ' . $id,
-                    'data' => []
+                    'data' => $request->all()
                 ], Response::HTTP_OK);
                 
             } catch (QueryException $e) {
@@ -123,7 +119,7 @@ class UserController extends Controller
                     'response' => Response::HTTP_INTERNAL_SERVER_ERROR,
                     'success' => false,
                     'message' => $e->getMessage(),
-                    'data' => []
+                    'data' => $request->all()
                 ], Response::HTTP_INTERNAL_SERVER_ERROR);
             }
         }
@@ -137,7 +133,6 @@ class UserController extends Controller
                 'response' => Response::HTTP_OK,
                 'success' => true,
                 'message' => 'Delete user by id ' . $id,
-                'data' => []
             ], Response::HTTP_OK);
             
         } catch (QueryException $e) {
@@ -145,7 +140,6 @@ class UserController extends Controller
                 'response' => Response::HTTP_INTERNAL_SERVER_ERROR,
                 'success' => false,
                 'message' => $e->getMessage(),
-                'data' => []
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
@@ -168,8 +162,6 @@ class UserController extends Controller
                 'response' => Response::HTTP_INTERNAL_SERVER_ERROR,
                 'success' => false,
                 'message' => $e->getMessage(),
-                'data' => []
-
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
@@ -191,7 +183,6 @@ class UserController extends Controller
                 'response' => Response::HTTP_INTERNAL_SERVER_ERROR,
                 'success' => false,
                 'message' => $e->getMessage(),
-                'data' => []
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }

@@ -89,10 +89,10 @@ class AccountController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'response' => Response::HTTP_UNPROCESSABLE_ENTITY,
+                'response' => Response::HTTP_BAD_REQUEST,
                 'success' => false,
                 'message' => $validator->errors(),
-            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+            ], Response::HTTP_BAD_REQUEST);
         }else{
             try {
                     $user = User::findOrFail(Auth::user()->id);

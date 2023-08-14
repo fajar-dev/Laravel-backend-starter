@@ -15,6 +15,16 @@ use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class AccountController extends Controller
 {
+    public function me()
+    {
+        return response()->json([
+            'response' => Response::HTTP_OK,
+            'success' => true,
+            'message' => 'Get information user login.',
+            'data' => auth()->user()
+        ], Response::HTTP_OK);
+    }
+
     public function update(Request $request)
     {    
         $validator = Validator::make($request->all(), [
@@ -25,25 +35,13 @@ class AccountController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'response' => Response::HTTP_UNPROCESSABLE_ENTITY,
+                'response' => Response::HTTP_BAD_REQUEST,
                 'success' => false,
                 'message' => $validator->errors(),
-                'data' => []
-            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+            ], Response::HTTP_BAD_REQUEST);
         }else{
             try {
-                if(empty($request->photo)){
-                    $user = User::findOrFail(Auth::user()->id);
-                    $user->name  = $request->name;
-                    $user->email  = $request->email;
-                    $respons = $user->save();
-                    return response()->json([
-                        'response' => Response::HTTP_OK,
-                        'success' => true,
-                        'message' => 'User account update without photo successfully.',
-                        'data' => $respons
-                    ], Response::HTTP_OK);
-                }else{
+                if($request->hasFile('photo')){
                     $imagePath = $request->file('photo')->getRealPath();
                     $result = Cloudinary::upload($imagePath,  ['folder' => 'user']);
                     $imageUrl = $result->getSecurePath();
@@ -57,7 +55,18 @@ class AccountController extends Controller
                         'response' => Response::HTTP_OK,
                         'success' => true,
                         'message' => 'User account update with photo successfully',
-                        'data' => []
+                        'data' => $request->all()
+                    ], Response::HTTP_OK);
+                }else{
+                    $user = User::findOrFail(Auth::user()->id);
+                    $user->name  = $request->name;
+                    $user->email  = $request->email;
+                    $user->save();
+                    return response()->json([
+                        'response' => Response::HTTP_OK,
+                        'success' => true,
+                        'message' => 'User account update without photo successfully.',
+                        'data' => $request->all()
                     ], Response::HTTP_OK);
                 }
                 
@@ -66,7 +75,6 @@ class AccountController extends Controller
                     'response' => Response::HTTP_INTERNAL_SERVER_ERROR,
                     'success' => false,
                     'message' => $e->getMessage(),
-                    'data' => []
                 ], Response::HTTP_INTERNAL_SERVER_ERROR);
             }
         }
@@ -81,11 +89,10 @@ class AccountController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'response' => Response::HTTP_UNPROCESSABLE_ENTITY,
+                'response' => Response::HTTP_BAD_REQUEST,
                 'success' => false,
                 'message' => $validator->errors(),
-                'data' => []
-            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+            ], Response::HTTP_BAD_REQUEST);
         }else{
             try {
                     $user = User::findOrFail(Auth::user()->id);
@@ -95,7 +102,7 @@ class AccountController extends Controller
                         'response' => Response::HTTP_OK,
                         'success' => true,
                         'message' => 'Change password successfully',
-                        'data' => []
+                        'data' => $request->all()
                     ], Response::HTTP_OK);
             
                 
@@ -104,7 +111,6 @@ class AccountController extends Controller
                     'response' => Response::HTTP_INTERNAL_SERVER_ERROR,
                     'success' => false,
                     'message' => $e->getMessage(),
-                    'data' => []
                 ], Response::HTTP_INTERNAL_SERVER_ERROR);
             }
         }

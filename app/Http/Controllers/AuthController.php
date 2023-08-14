@@ -65,7 +65,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'email' => 'required',
+            'email' => 'required|email',
             'password' => 'required',
         ]);
 
@@ -96,13 +96,14 @@ class AuthController extends Controller
     }
 
     public function forget(Request $request){
-        $cek = User::where('email', $request->email)->first();
-        if($cek == null){
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|exists:users,email',
+        ]);
+        if ($validator->fails()) {
             return response()->json([
                 'response' => Response::HTTP_NOT_ACCEPTABLE,
                 'success' => false,
-                'message' => 'email is not registered',
-                'data' => [],
+                'errors' => 'email is not registered',
             ], Response::HTTP_NOT_ACCEPTABLE);
         }else{
             try {
@@ -119,15 +120,13 @@ class AuthController extends Controller
                     'response' => Response::HTTP_OK,
                     'success' => true,
                     'message' => 'email sent successfully',
-                    'data' => [],
                 ], Response::HTTP_OK);
                 
             } catch (QueryException $e) {
                 return response()->json([
                     'response' => Response::HTTP_INTERNAL_SERVER_ERROR,
                     'success' => false,
-                    'message' => $e->getMessage(),
-                    'data' => []
+                    'errors' => $e->getMessage(),
                 ], Response::HTTP_INTERNAL_SERVER_ERROR);
             }
         }

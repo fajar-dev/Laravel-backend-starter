@@ -2,9 +2,12 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Models\User;
+use Database\Seeders\UserSeeder;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AuthTest extends TestCase
 {
@@ -62,7 +65,7 @@ class AuthTest extends TestCase
 
     public function testRegisterEmailAlreadyExists()
     {
-        $existingUser = \App\Models\User::factory()->create([
+        User::factory()->create([
             'email' => 'john@example.com',
         ]);
 
@@ -81,6 +84,54 @@ class AuthTest extends TestCase
                         'The email has already been taken.'
                     ]
                 ],
+            ]);
+    }
+    
+    public function testLoginSuccess(){
+
+        $this->seed([UserSeeder::class]);
+
+        $user = User::first();
+        $password = 'password123';
+
+        $response = $this->postJson('/api/auth/login', [
+            'email' => $user->email,
+            'password' => $password,
+        ]);
+
+        $response->assertStatus(200)
+            ->assertJson([
+                'response' => '200',
+                'success' => true,
+                'message' => 'JWT Token refresh Successfully',
+            ])
+            ->assertJsonStructure([
+                'data' => [
+                    'token_type',
+                    'expires_in',
+                    'access_token',
+                ],
+            ]);
+        $this->assertTrue(Hash::check($password, $user->password));
+    }
+    
+
+    public function testLoginFailed(){
+        $this->seed([UserSeeder::class]);
+
+        $user = User::first();
+        $password = 'passwordWrong';
+
+        $response = $this->postJson('/api/auth/login', [
+            'email' => $user->email,
+            'password' => $password,
+        ]);
+
+        $response->assertStatus(401)
+            ->assertJson([
+                'response' => '401',
+                'success' => false,
+                'message' => 'Username or password wrong',
             ]);
     }
 }

@@ -154,9 +154,9 @@ class AuthController extends Controller
             'success' => true,
             'message' => 'JWT Token refresh Successfully',
             'data' => [
-                'access_token' => $token,
                 'token_type' => 'bearer',
-                'expires_in' => Auth::factory()->getTTL() * 60
+                'expires_in' => Auth::factory()->getTTL() * 60,
+                'access_token' => $token
             ]
         ], Response::HTTP_OK);
     }
